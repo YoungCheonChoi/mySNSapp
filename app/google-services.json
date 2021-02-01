@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "957403580934",
+    "project_id": "basicsns-7ed61",
+    "storage_bucket": "basicsns-7ed61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957403580934:android:7e4f17455967ee3d7e1187",
+        "android_client_info": {
+          "package_name": "com.example.basicsns"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957403580934-kcu3f7nfpbu83dem71505iioplh80pcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoKjpfpKWuwMztGmX9HJQ_dU4VJut-2vU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957403580934-kcu3f7nfpbu83dem71505iioplh80pcp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
