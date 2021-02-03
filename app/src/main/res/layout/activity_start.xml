@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="450dp"
         android:src="@drawable/logo"/>
 
     <Button
@@ -20,7 +20,8 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/button_background"
         android:text="로그인"
-        android:textColor="@color/colorBlack"/>
+        android:layout_gravity="center"
+        android:textColor="@color/colorBlack" />
 
     <Button
         android:id="@+id/register"
@@ -29,6 +30,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
         android:text="회원 가입"
+        android:layout_gravity="center"
         android:textColor="@color/colorBlack"/>
 
 </LinearLayout>

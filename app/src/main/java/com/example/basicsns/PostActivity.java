@@ -142,6 +142,10 @@ public class PostActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "이미지가 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();
+            //메인으로 이동
+            startActivity(new Intent(PostActivity.this, MainActivity.class));
+            finish();
+
         }
     }
 
@@ -150,9 +154,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            imageUri = result.getUri();
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            imageUri = result.getUri();
+
+            if (resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
 
             image_added.setImageURI(imageUri);
         } else {

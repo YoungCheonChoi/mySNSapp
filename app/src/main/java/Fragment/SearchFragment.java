@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(userAdapter);
 
         readUsers();
+
         search_bar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

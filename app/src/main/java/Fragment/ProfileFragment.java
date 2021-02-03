@@ -37,7 +37,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import Adapter.MyPhotoAdapter;
+import Adapter.MyfotoAdapter;
 import Model.Post;
 import Model.User;
 
@@ -51,11 +51,11 @@ public class ProfileFragment extends Fragment {
     private List<String> mySaves;
 
     RecyclerView recyclerView_saves;
-    MyPhotoAdapter myPhotoAdapter_saves;
+    MyfotoAdapter myPhotoAdapter_saves;
     List<Post> postList_saves;
 
     RecyclerView recyclerView;
-    MyPhotoAdapter myPhotoAdapter;
+    MyfotoAdapter myPhotoAdapter;
     List<Post> postList;
 
     FirebaseUser firebaseUser;
@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(linearLayoutManager);
         postList = new ArrayList<>();
-        myPhotoAdapter = new MyPhotoAdapter(getContext(), postList);
+        myPhotoAdapter = new MyfotoAdapter(getContext(), postList);
         recyclerView.setAdapter(myPhotoAdapter);
 
         //내가 저장한 게시글(북마크)
@@ -100,7 +100,7 @@ public class ProfileFragment extends Fragment {
         LinearLayoutManager linearLayoutManager_saves = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(linearLayoutManager_saves);
         postList_saves = new ArrayList<>();
-        myPhotoAdapter_saves = new MyPhotoAdapter(getContext(), postList_saves);
+        myPhotoAdapter_saves = new MyfotoAdapter(getContext(), postList_saves);
         recyclerView_saves.setAdapter(myPhotoAdapter_saves);
 
         recyclerView.setVisibility(View.VISIBLE);

@@ -18,33 +18,32 @@ import java.util.List;
 import Fragment.PostDetailFragment;
 import Model.Post;
 
-public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHolder> {
+public class MyfotoAdapter extends RecyclerView.Adapter<MyfotoAdapter.ViewHolder> {
 
     public Context context;
     private List<Post> mPosts;
 
-    public MyPhotoAdapter(Context context, List<Post> mPosts) {
-        this.context = context;
-        this.mPosts = mPosts;
+    public MyfotoAdapter(Context context, List<Post> mPosts){
+        this.context=context;
+        this.mPosts=mPosts;
     }
-
 
     @NonNull
     @Override
-    public MyPhotoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.photos_item, viewGroup, false);
-        return new MyPhotoAdapter.ViewHolder(view);
+        return new MyfotoAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyPhotoAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Post post = mPosts.get(i);
 
         Glide.with(context).load(post.getPostimage()).into(viewHolder.post_image);
 
         viewHolder.post_image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 SharedPreferences.Editor editor = context.getSharedPreferences("PREPS", Context.MODE_PRIVATE).edit();
                 editor.putString("postid", post.getPostid());
                 editor.apply();
@@ -52,7 +51,6 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
                 ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PostDetailFragment()).commit();
             }
         });
-
     }
 
     @Override

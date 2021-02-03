@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new NotificationFragment();
                     break;
                 case R.id.nav_profile:
-                   // 현재 사용하는 유저의 프로필을 보여주기
+                    //현재 사용하는 유저의 프로필을 보여주기
                     SharedPreferences.Editor editor = getSharedPreferences("PREPS", MODE_PRIVATE).edit();
                     editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                     selectedFragment = new ProfileFragment();

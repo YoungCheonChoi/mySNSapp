@@ -36,7 +36,7 @@ public class StartActivity extends AppCompatActivity {
 
         //연결
         login=findViewById(R.id.login);
-        login=findViewById(R.id.register);
+        register=findViewById(R.id.register);
 
         //로그인 버튼 클릭
         login.setOnClickListener(new View.OnClickListener() {
