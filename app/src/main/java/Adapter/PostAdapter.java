@@ -185,11 +185,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         //저장(북마크)버튼 누르면
         viewHolder.save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { 
                 if (viewHolder.save.getTag().equals("save")) {
+                    //저장하기
                     FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
                             .child(post.getPostid()).setValue(true);
                 } else {
+                    //저장한거 지우기
                     FirebaseDatabase.getInstance().getReference().child("Saves").child(firebaseUser.getUid())
                             .child(post.getPostid()).removeValue();
                 }
@@ -232,6 +234,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 if(!post.getPublisher().equals(firebaseUser.getUid())){
                     popupMenu.getMenu().findItem(R.id.edit).setVisible(false);
                     popupMenu.getMenu().findItem(R.id.delete).setVisible(false);
+                    //자기글은 신고하지 못하게
+                } else if(post.getPublisher().equals(firebaseUser.getUid())){
+                    popupMenu.getMenu().findItem(R.id.report).setVisible(false);
                 }
                 popupMenu.show();
             }
@@ -300,10 +305,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(firebaseUser.getUid()).exists()) {
                     imageView.setImageResource(R.drawable.ic_liked);
-                    imageView.setTag("Liked");
+                    imageView.setTag("liked");
                 } else {
                     imageView.setImageResource(R.drawable.ic_like);
-                    imageView.setTag("Like");
+                    imageView.setTag("like");
                 }
             }
 
@@ -328,6 +333,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     }
 
+    //좋아요누른 사람 수
     private void nrLikes(TextView likes, String postid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes")
                 .child(postid);
@@ -347,7 +353,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     //게시글 출력하기
     private void publisherInfo(ImageView image_profile, TextView username, TextView publisher, String userid) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("USERS").child(userid);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override

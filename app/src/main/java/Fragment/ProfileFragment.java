@@ -37,7 +37,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import Adapter.MyfotoAdapter;
+import Adapter.MyphotoAdapter;
 import Model.Post;
 import Model.User;
 
@@ -51,11 +51,11 @@ public class ProfileFragment extends Fragment {
     private List<String> mySaves;
 
     RecyclerView recyclerView_saves;
-    MyfotoAdapter myPhotoAdapter_saves;
+    MyphotoAdapter myPhotoAdapter_saves;
     List<Post> postList_saves;
 
     RecyclerView recyclerView;
-    MyfotoAdapter myPhotoAdapter;
+    MyphotoAdapter myPhotoAdapter;
     List<Post> postList;
 
     FirebaseUser firebaseUser;
@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
         image_profile = view.findViewById(R.id.image_profile);
         options = view.findViewById(R.id.options);
         posts = view.findViewById(R.id.posts);
+        edit_profile = view.findViewById(R.id.edit_profile);
         followers = view.findViewById(R.id.followers);
         following = view.findViewById(R.id.following);
         fullname = view.findViewById(R.id.fullname);
@@ -91,16 +92,16 @@ public class ProfileFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(linearLayoutManager);
         postList = new ArrayList<>();
-        myPhotoAdapter = new MyfotoAdapter(getContext(), postList);
+        myPhotoAdapter = new MyphotoAdapter(getContext(), postList);
         recyclerView.setAdapter(myPhotoAdapter);
 
         //내가 저장한 게시글(북마크)
         recyclerView_saves = view.findViewById(R.id.recycler_view_save);
         recyclerView_saves.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager_saves = new GridLayoutManager(getContext(), 3);
-        recyclerView.setLayoutManager(linearLayoutManager_saves);
+        recyclerView_saves.setLayoutManager(linearLayoutManager_saves);
         postList_saves = new ArrayList<>();
-        myPhotoAdapter_saves = new MyfotoAdapter(getContext(), postList_saves);
+        myPhotoAdapter_saves = new MyphotoAdapter(getContext(), postList_saves);
         recyclerView_saves.setAdapter(myPhotoAdapter_saves);
 
         recyclerView.setVisibility(View.VISIBLE);
@@ -125,11 +126,11 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 String btn = edit_profile.getText().toString();
 
-                if (btn.equals("프로필 편집")) {
+                if (btn.equals("프로필 설정")) {
                     //자기 계정이면 프로필수정 레이아웃으로
                     startActivity(new Intent(getContext(), EditProfileActivity.class));
 
-                } else if (btn.equals("팔로우")) {
+                } else if (btn.equals("follow")) {
                     //팔로우한 남의 계정 프로필이면 팔로우 버튼으로 변경
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(profileid).setValue(true);
@@ -138,7 +139,7 @@ public class ProfileFragment extends Fragment {
 
                     addNotifications();
 
-                } else if (btn.equals("팔로잉")) {
+                } else if (btn.equals("following")) {
                     //팔로잉하지않은 남의 계정이면
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(profileid).removeValue();
@@ -304,7 +305,7 @@ public class ProfileFragment extends Fragment {
                 int i = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
-                    //프로필 아이디와 일치하는 사람의 피드가져오기
+                    //본인 피드 가져오기
                     if (post.getPublisher().equals(profileid)) {
                         i++;
                     }

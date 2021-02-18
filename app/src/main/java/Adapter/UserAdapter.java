@@ -57,7 +57,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         final User user = mUsers.get(i);
+
         viewHolder.btn_follow.setVisibility(View.VISIBLE);
 
         viewHolder.username.setText(user.getUsername());
@@ -68,6 +70,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         isFollowing(user.getId(), viewHolder.btn_follow);
 
+        //자기 아이디이면 팔로우버튼 안보이게 숨기기기
         if (user.getId().equals(firebaseUser.getUid())) {
             viewHolder.btn_follow.setVisibility(View.GONE);
         }
@@ -93,13 +96,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         viewHolder.btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(viewHolder.btn_follow.getText().toString().equals("Follow")){
+                if(viewHolder.btn_follow.getText().toString().equals("follow")){
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(user.getId()).setValue(true);
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(user.getId())
                             .child("followers").child(firebaseUser.getUid()).setValue(true);
+
                     //팔로우했다는 알림 받기
                     addNotifications(user.getId());
+
                 }else{
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(user.getId()).removeValue();
@@ -148,14 +153,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private void isFollowing(String userid, Button button) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Follow").child(firebaseUser.getUid()).child("Following");
+                .child("Follow").child(firebaseUser.getUid()).child("following");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(userid).exists()) {
-                    button.setText("Following");
+                    button.setText("following");
                 } else {
-                    button.setText("Follow");
+                    button.setText("follow");
                 }
             }
 

@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.theartofdev.edmodo.cropper.CropImage;
 //import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -71,9 +72,9 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-//        CropImage.activity()
-//                .setAspectRatio(1, 1)  //화면은 정방형
-//                .start(PostActivity.this);
+        CropImage.activity()
+                .setAspectRatio(1, 1)  //화면은 정방형
+                .start(PostActivity.this);
     }
 
     private String getFileExtension(Uri uri) {
@@ -154,11 +155,9 @@ public class PostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            imageUri = result.getUri();
-
-            if (resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {   //theartofdev.edmodo.cropper 이거 사용법 구글링해서 더 찾아보기
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            imageUri = result.getUri();
 
             image_added.setImageURI(imageUri);
         } else {

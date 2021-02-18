@@ -18,12 +18,12 @@ import java.util.List;
 import Fragment.PostDetailFragment;
 import Model.Post;
 
-public class MyfotoAdapter extends RecyclerView.Adapter<MyfotoAdapter.ViewHolder> {
+public class MyphotoAdapter extends RecyclerView.Adapter<MyphotoAdapter.ViewHolder> {
 
     public Context context;
     private List<Post> mPosts;
 
-    public MyfotoAdapter(Context context, List<Post> mPosts){
+    public MyphotoAdapter(Context context, List<Post> mPosts){
         this.context=context;
         this.mPosts=mPosts;
     }
@@ -32,7 +32,7 @@ public class MyfotoAdapter extends RecyclerView.Adapter<MyfotoAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.photos_item, viewGroup, false);
-        return new MyfotoAdapter.ViewHolder(view);
+        return new MyphotoAdapter.ViewHolder(view);
     }
 
     @Override

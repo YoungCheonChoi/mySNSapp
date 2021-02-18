@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
                     for (String id : followingList) {
-                        //내가 팔로우하는 사람들과 아이디가 같아야만 포스트 읽어오기
+                        //내가 팔로우하는 사람들과 아이디가 같아야만 포스트 읽어오기(반복문으로 돌면서 전부다 긁어오기)
                         if (post.getPublisher().equals(id)) {
                             postLists.add(post);
                         }

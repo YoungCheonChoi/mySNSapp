@@ -186,7 +186,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(EditProfileActivity.this, "이미지가 선택되자 않았습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileActivity.this, "이미지가 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
