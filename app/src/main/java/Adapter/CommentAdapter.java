@@ -89,7 +89,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             public boolean onLongClick(View view) {
                 if(comment.getPublisher().equals(firebaseUser.getUid())){
                     AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
-                    alertDialog.setTitle("삭제를 원하십니까?");
+                    alertDialog.setTitle("삭제할까요?");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "아니요", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

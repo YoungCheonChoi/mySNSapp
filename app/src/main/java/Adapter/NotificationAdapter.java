@@ -30,7 +30,6 @@ import Model.User;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
 
-
     private Context mContext;
     private List<Notification> mNotification;
 
@@ -65,7 +64,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onClick(View v) {
                 if(notification.isIspost()){
-                    SharedPreferences .Editor editor = mContext.getSharedPreferences("PREPS", Context.MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREPS", Context.MODE_PRIVATE).edit();
                     editor.putString("postid", notification.getPostid());
                     editor.apply();
 
@@ -89,7 +88,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-
         public ImageView image_profile, post_image;
         public TextView username, text;
 
@@ -109,6 +107,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //알림창에 프로필사진 가져오기
                 User user = dataSnapshot.getValue(User.class);
                 Glide.with(mContext).load(user.getImageurl()).into(imageView);
                 username.setText(user.getUsername());
@@ -126,6 +125,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //알림창에 게시글 사진 가져오기
                 Post post = dataSnapshot.getValue(Post.class);
                 Glide.with(mContext).load(post.getPostimage()).into(imageView);
             }

@@ -130,17 +130,18 @@ public class ProfileFragment extends Fragment {
                     //자기 계정이면 프로필수정 레이아웃으로
                     startActivity(new Intent(getContext(), EditProfileActivity.class));
 
-                } else if (btn.equals("follow")) {
-                    //팔로우한 남의 계정 프로필이면 팔로우 버튼으로 변경
+                } else if (btn.equals("팔 로 우")) {
+                    //팔로우안한 상태인 남의 계정 프로필 -> 클릭하면 팔로우
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(profileid).setValue(true);
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
                             .child("followers").child(firebaseUser.getUid()).setValue(true);
 
+                    //팔로우 알림
                     addNotifications();
 
-                } else if (btn.equals("following")) {
-                    //팔로잉하지않은 남의 계정이면
+                } else if (btn.equals("팔 로 잉")) {
+                    //팔로잉 중인 남의 계정 -> 클릭하면 언팔
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(profileid).removeValue();
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
@@ -248,9 +249,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(profileid).exists()) {
-                    edit_profile.setText("following");
+                    //팔로우 목록에 있으면
+                    edit_profile.setText("팔 로 잉");
                 } else {
-                    edit_profile.setText("follow");
+                    edit_profile.setText("팔 로 우");
                 }
             }
 
@@ -261,10 +263,11 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    //본인 계정 팔로워 수 얻기
+    //팔로워, 팔로잉 수 얻기
     private void getFollowers() {
+        //프로필아이디에 따라서 팔로잉, 팔로워 수 가져오기
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Follow").child(firebaseUser.getUid()).child("followers");
+                .child("Follow").child(profileid).child("followers");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -280,7 +283,7 @@ public class ProfileFragment extends Fragment {
         });
 
         DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference()
-                .child("Follow").child(firebaseUser.getUid()).child("following");
+                .child("Follow").child(profileid).child("following");
 
         reference1.addValueEventListener(new ValueEventListener() {
             @Override

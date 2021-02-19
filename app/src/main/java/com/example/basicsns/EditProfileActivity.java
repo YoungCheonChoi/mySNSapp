@@ -1,6 +1,8 @@
 package com.example.basicsns;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,9 +38,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
+import Fragment.ProfileFragment;
 import Model.User;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -94,32 +99,36 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-//        tv_change.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //이미지 크롭 실행(원모양)
-//                CropImage.activity()
-//                        .setAspectRatio(1, 1)
-//                        .setCropShape(CropImageView.CropShape.OVAL)
-//                        .start(EditProfileActivity.this);
-//            }
-//        });
-//
-//        image_profile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //이미지 크롭 실행(원모양)
-//                CropImage.activity()
-//                        .setAspectRatio(1, 1)
-//                        .setCropShape(CropImageView.CropShape.OVAL)
-//                        .start(EditProfileActivity.this);
-//            }
-//        });
+        tv_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //이미지 크롭 실행(원모양)
+                CropImage.activity()
+                        .setAspectRatio(1, 1)
+                       //.setCropShape(CropImageView.CropShape.OVAL)
+                        .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)
+                        .start(EditProfileActivity.this);
+            }
+        });
+
+        image_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //이미지 크롭 실행(원모양)
+                CropImage.activity()
+                        .setAspectRatio(1, 1)
+                        //.setCropShape(CropImageView.CropShape.OVAL)
+                        .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)
+                        .start(EditProfileActivity.this);
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateProfile(fullname.getText().toString(), username.getText().toString(),bio.getText().toString());
+
+                Toast.makeText(EditProfileActivity.this, "회원정보를 수정했습니다.", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -171,7 +180,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("imageuri", "" + myUrl);
+                        hashMap.put("imageurl", "" + myUrl);
 
                         reference.updateChildren(hashMap);
                         pd.dismiss();
@@ -194,14 +203,15 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(/*requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE &&*/ resultCode == RESULT_OK){
-           //CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            // mImageUri = result.getUri();
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            mImageUri = result.getUri();
 
             uploadImage();
 
         }else{
             Toast.makeText(this, "에러가 발생했습니다.", Toast.LENGTH_SHORT).show();
         }
+
     }
 }

@@ -101,7 +101,6 @@ public class CommentsActivity extends AppCompatActivity {
         //댓글 가져오기
         readComments();
 
-
     }
 
     private void addcomment() {
